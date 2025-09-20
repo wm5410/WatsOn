@@ -9,7 +9,7 @@ import { COLORS } from '../tokens/colors';
 
 export default function MapScreen() {
   const navigation = useNavigation<any>();
-
+ 
   return (
     <View style={styles.container}>
       <View style={styles.mapPlaceholder}>
