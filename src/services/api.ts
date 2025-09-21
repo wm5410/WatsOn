@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Make sure this URL is correct and the server is running!
-const API_BASE_URL = 'https://45c6a542afbb.ngrok-free.app';
+const API_BASE_URL = 'https://d561e5b38358.ngrok-free.app'; 
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -46,7 +46,10 @@ api.interceptors.response.use(
         }
 
         console.log('[Refresh] Sending refresh token to server...');
-        const response = await axios.post(`${API_BASE_URL}/auth/token/refresh/`, {
+        
+        // --- THIS IS THE FIX ---
+        // The URL is now correct according to your documentation
+        const response = await axios.post(`${API_BASE_URL}/auth/refresh/`, {
           refresh: refreshToken,
         });
 
@@ -83,8 +86,15 @@ export interface Event {
     ticket_capacity: number;
 }
 
-export const getEvents = () => api.get<Event[]>('/events/');
-export const getEventById = (id: string) => api.get<Event>(`/events/${id}/`);
+export const getEvents = (lat: number, lon: number, radius_km: number = 10000) => {
+  return api.get<Event[]>('/events/nearby/', {
+    params: {
+      lat,
+      lon,
+      radius_km,
+    }
+  });
+};export const getEventById = (id: string) => api.get<Event>(`/events/${id}/`);
 export const createEvent = (eventData: Omit<Event, 'id' | 'host'>) => api.post('/events/', eventData);
 
 export const loginUser = async (credentials: { email: string; password: string; }) => {

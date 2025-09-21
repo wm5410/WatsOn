@@ -1,7 +1,9 @@
+// components/EventMarker.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { BlurView } from '@react-native-community/blur';
 import { Event } from '../services/api';
 
 interface Props {
@@ -23,11 +25,21 @@ export default function EventMarker({ event, onPress }: Props) {
       </View>
       
       <Callout tooltip onPress={onPress}>
-        <View style={styles.calloutContainer}>
-          <Text style={styles.calloutTitle}>{event.title}</Text>
-          <Text style={styles.calloutTime}>{formattedTime}</Text>
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>Free</Text>
+        {/* Outer wrapper clips the BlurView to the rounded corners */}
+        <View style={styles.calloutOuter}>
+          {/* Blur background (covers whole container) */}
+          <BlurView style={styles.blurFill} blurType="dark" blurAmount={12} />
+
+          {/* Foreground content */}
+          <View style={styles.calloutContent}>
+            <Text style={styles.calloutTitle} numberOfLines={2} ellipsizeMode="tail">
+              {event.title}
+            </Text>
+            <Text style={styles.calloutTime}>{formattedTime}</Text>
+
+            <View style={styles.priceContainer}>
+              <Text style={styles.priceText}>Free</Text>
+            </View>
           </View>
         </View>
       </Callout>
@@ -51,19 +63,34 @@ const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center',
   },
-  calloutContainer: {
-    backgroundColor: 'rgba(0,0,0,0.7)', // Changed to match the footer
+
+  /* Outer wrapper: clips blur and defines size/radius */
+  calloutOuter: {
     borderRadius: 12,
-    padding: 15,
-    maxWidth: 250, // This fixes the text wrapping issue
+    overflow: 'hidden',               // IMPORTANT: clip blur to rounded corners
     borderColor: 'rgba(255, 255, 255, 0.2)',
     borderWidth: 1,
+    width: 220,                       // keep width to avoid weird wrapping
+    elevation: 6,
   },
+
+  /* Blur fills the outer wrapper */
+  blurFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+
+  /* content sits above the blur */
+  calloutContent: {
+    padding: 12,
+    backgroundColor: 'transparent',   // transparent so blur is visible behind content
+  },
+
   calloutTitle: {
     color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 4,
+    flexShrink: 1,
   },
   calloutTime: {
     color: '#E0E0E0',
@@ -71,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   priceContainer: {
-    backgroundColor: 'rgba(56, 161, 105, 0.2)',
+    backgroundColor: 'rgba(56, 161, 105, 0.12)',
     borderRadius: 8,
     borderColor: 'rgba(56, 161, 105, 1)',
     borderWidth: 1,
