@@ -1,0 +1,28 @@
+im using jwt, we have an access token and a refresh token
+
+
+
+{
+
+    "email": "testuser@example.com",
+
+    "name": "ahahah",
+
+    "password": "a-strong-password-123"
+
+}
+
+
+
+{
+
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1ODQ5OTMyOSwiaWF0IjoxNzU4NDEyOTI5LCJqdGkiOiJiYTdiMDBjY2E1NTk0ZDk5YmIyZjA5MmI0OWQ0MmQ4YSIsInVzZXJfaWQiOiIyMGVhODk2YS1iMWI2LTRkMzEtYTk3Zi0wNzBmMGY5YzAwYmMifQ.Uf4bOV7qvxnhpO-6u-Yo-XYlGEfCj984QXhcJ1QBQNU",
+
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU4NDEzMjI5LCJpYXQiOjE3NTg0MTI5MjksImp0aSI6Ijk3MTY1ZDIzMDRjZjQ1NjlhMjQ4YmU0MTg0NDBiMzBlIiwidXNlcl9pZCI6IjIwZWE4OTZhLWIxYjYtNGQzMS1hOTdmLTA3MGYwZjljMDBiYyJ9.wswL-aUR0aWV30qIOXhnwNckKWQAEKk1Hoib1ugQLTs"
+
+}
+
+
+
+
+
